@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en">
+<script type="module">
+  import init from './out/tricycleasia/tricycle_asia.js'
+  init()
+</script>
+<body style="margin: 0px;">
+</body>
+</html>
