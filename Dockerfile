@@ -6,7 +6,7 @@ COPY . .
 RUN cargo build --release
 
 # Final run stage
-FROM --platform=linux/amd64 debian:bookworm-slim AS runner
+FROM debian:bookworm-slim AS runner
 
 WORKDIR /app
 COPY --from=builder /app/target/release/flopsis /app/flopsis

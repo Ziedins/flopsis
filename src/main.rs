@@ -5,7 +5,7 @@ use rocket::response::content::RawHtml;
 
 #[get("/")]
 fn index() -> RawHtml<&'static str> {
-    RawHtml("Esmu publisks</br> <a href='tricycleasia'>Trīsritenis pa āziju</a>")
+    RawHtml("<b>Esmu publisks</b></br> <a href='tricycleasia'>Trīsritenis pa āziju</a>")
 }
 
 #[get("/tricycleasia")]
