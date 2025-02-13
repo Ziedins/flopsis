@@ -1,26 +1,34 @@
-#[macro_use] extern crate rocket;
-use rocket_dyn_templates::{Template, context};
-use rocket::fs::{FileServer, relative};
-use rocket::response::content::RawHtml;
+use actix_web::{get, post, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
 
 #[get("/")]
-fn index() -> RawHtml<&'static str> {
-    RawHtml("Esmu publisks</br> <a href='tricycleasia'>Trīsritenis pa āziju</a>")
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
 }
 
-#[get("/tricycleasia")]
-fn tricycleasia() -> Template {
-    Template::render("tricycleasia", context! {
+#[post("/echo")]
+async fn echo(req_body: String) -> impl Responder {
+    HttpResponse::Ok().body(req_body)
+}
 
+async fn manual_hello() -> impl Responder {
+    HttpResponse::Ok().body("Hey there!")
+}
+
+async fn greet(req: HttpRequest) -> impl Responder {
+    let name = req.match_info().get("name").unwrap_or(" Liisa");
+    format!("Hello {}!", name)
+}
+
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .route("/name/{name}", web::get().to(greet))
+            .service(hello)
+            .service(echo)
+            .route("/hey", web::get().to(manual_hello))
     })
-}
-
-#[launch]
-fn rocket() -> _ {
-    rocket::build()
-        .mount("/", routes![index])
-        .mount("/", routes![tricycleasia])
-        .mount("/out", FileServer::from(relative!("/out")))
-        .mount("/assets", FileServer::from(relative!("/out/tricycleasia/assets")))
-        .attach(Template::fairing())
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await
 }
