@@ -14,3 +14,4 @@ name = "flopsis"
 actix-web = "4.9.0"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 reqwest = "0.12.12"
+serde = { version = "1.0.217", features = ["derive"] }
