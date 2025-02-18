@@ -1,4 +1,4 @@
-use flopsis::run;
+use flopsis::startup::run;
 use std::net::TcpListener;
 
 fn spawn_app() -> String {
