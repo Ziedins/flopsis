@@ -6,7 +6,7 @@ use uuid::Uuid;
 use flopsis::configuration::{get_configuration, DatabaseSettings};
 
 pub struct TestApp {
-    pub addressna: String,
+    pub address: String,
     pub db_pool: PgPool,
 }
 
